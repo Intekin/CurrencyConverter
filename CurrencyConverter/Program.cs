@@ -12,12 +12,12 @@ namespace CurrencyConverter
 
         static void Main(string[] args)
         {
-
             bool quit = false;
             int selection = 0;
 
             while (!quit)
             {
+
                 switch (selection)
                 {
                     case 0:
@@ -25,32 +25,20 @@ namespace CurrencyConverter
                         selection = CurrencySelector();
                         Console.Clear();
                         break;
-                            
+
                     case 1:
-                        SekMenu();
+                        ConvertMenu();
                         selection = 0;
                         CleanConsole();
                         break;
 
-                   case 2:
-                        EurMenu();
-                        selection = 0;
-                        CleanConsole();
-                        break;
-
-                    case 3:
-                        UsdMenu();
-                        selection = 0;
-                        CleanConsole();
-                        break;
-                       
                     default:
                         Console.WriteLine("Fuck, something did not work.");
                         CleanConsole();
                         break;
                 }
-              
-               if(selection == 4)
+
+                if (selection == 2)
                {
                    quit = true;
                }
@@ -59,37 +47,29 @@ namespace CurrencyConverter
 
         }
 
-        private static void UsdMenu()
+        private static void ConvertMenu()
         {
-            //throw new NotImplementedException();
-        }
+            string[] value = { "", "", "" }; // Amount, from, to
 
-        private static void EurMenu()
-        {
-            //throw new NotImplementedException();
-        }
+            Console.WriteLine("-----Conversion Menu.-----\n" +
+                "Please type the amount you want to convert");
+            value[0] = Console.ReadLine();
 
-        private static void SekMenu()
-        {
-            Console.WriteLine("--Sek Menu.--\n" +
-                "Please type like this \"800 EUR\" 800 SEK to EUR");
-            string valueString = Console.ReadLine();
+            Console.WriteLine("Please type the currency you have, SEK, EUR, USD");
+            value[1] = Console.ReadLine();
 
-            string[] value = valueString.Split(' ');
-            double currency = Convert.ToDouble(value[0]);
+            Console.WriteLine("Please type the currency you want to convert to SEK, EUR, USD");
+            value[2] = Console.ReadLine();
+
+            double amount = Convert.ToDouble(value[0]);
 
 
-            if (value[1] == "EUR")
+            if ((value[2] == "EUR") || (value[2] == "USD"))
             {
-                currency = currency / currencyValue[0];
-                Console.WriteLine(value[0] + "SEK is " + currency + "EUR"
+                amount = amount / currencyValue[1];
+                Console.WriteLine(value[0] + value[1] + " is " + amount + value[1]
                     + "\nThis is the bills and coins you will recive:\n");
-                CalculateValues(currency, value[1]);
-            }
-            else if (value[1] == "USD")
-            {
-                currency = currency / currencyValue[1];
-                CalculateValues(currency, value[1]);
+                CalculateValues(amount, value[1], value[2]);
             }
             else
             {
@@ -101,15 +81,17 @@ namespace CurrencyConverter
         static void MainMenu()
         {
             Console.WriteLine("Welcome to the currency converter.\n" +
-                "Please input your current currency\n" +
-                "1.SEK\n2.EUR\n3.USD\n4.Quit\n");    
+                "Select what you want to do.\n" +
+                "1.Convert\n2.Quit\n");    
         }
 
         static int CurrencySelector()
         {
             int temp = 0;
             string strTemp;
-            strTemp = Console.ReadLine();
+
+            strTemp = Console.ReadKey().KeyChar.ToString();
+
             if(strTemp == "1")
             {
                 temp = 1;
@@ -117,14 +99,6 @@ namespace CurrencyConverter
             else if (strTemp == "2")
             {
                 temp = 2;
-            }
-            else if (strTemp == "3")
-            {
-                temp = 3;
-            }
-            else if(strTemp == "4")
-            {
-                temp = 4;
             }
             else
             {
@@ -134,19 +108,19 @@ namespace CurrencyConverter
             return temp;
         }
 
-        static void CalculateValues(double value, string selectedCurrency)
+        static void CalculateValues(double value,string fromCurrency, string toCurrency)
         {
             double[] Currency = {};
-            if(selectedCurrency == "SEK")
+            if(toCurrency == "SEK")
             {
                 Currency = new double[] { 500, 100, 50, 20, 10, 1 };
             }
-            else if(selectedCurrency == "EUR")
+            else if(toCurrency == "EUR")
             {
-                Currency = new double[] { 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.10, 0.05, 0.01 };
+                Currency = new double[] { 500, 200, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.20, 0.10, 0.05, 0.02, 0.01 };
 
             }
-            else if (selectedCurrency == "USD")
+            else if (toCurrency == "USD")
             {
                 Currency = new double[] { 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.10, 0.05, 0.01 };
 
@@ -163,7 +137,7 @@ namespace CurrencyConverter
 
                 if (!((int)tempValue2 == 0))
                 {
-                    Console.WriteLine(Currency[i] + selectedCurrency + " x " + (int)tempValue2);
+                    Console.WriteLine((int)tempValue2 + "st " + Currency[i] + toCurrency);
                 }
             }
             Console.ReadKey();     
