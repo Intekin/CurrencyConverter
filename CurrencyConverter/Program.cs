@@ -34,6 +34,7 @@ namespace CurrencyConverter
 
                     default:
                         Console.WriteLine("Fuck, something did not work.");
+                        selection = 0;
                         CleanConsole();
                         break;
                 }
@@ -61,10 +62,10 @@ namespace CurrencyConverter
             Console.WriteLine("Please type the currency you want to convert to SEK, EUR, USD");
             value[2] = Console.ReadLine();
 
-            double amount = Convert.ToDouble(value[0]);
+            double amount = Convert.ToDouble(value[0]); //Convert value[0] to an int
 
 
-            if ((value[2] == "EUR") || (value[2] == "USD"))
+            if ((value[2] == "EUR") || (value[2] == "USD") || (value[2] == "SEK"))
             {
                 amount = amount / currencyValue[1];
                 Console.WriteLine(value[0] + value[1] + " is " + amount + value[1]
@@ -108,25 +109,25 @@ namespace CurrencyConverter
             return temp;
         }
 
-        static void CalculateValues(double value,string fromCurrency, string toCurrency)
+        static void CalculateValues(float value, string fromCurrency, string toCurrency)
         {
-            double[] Currency = {};
-            if(toCurrency == "SEK")
+            float[] Currency = { };
+            if (toCurrency == "SEK")
             {
-                Currency = new double[] { 500, 100, 50, 20, 10, 1 };
+                Currency = new float[] { 500, 100, 50, 20, 10, 1 };
             }
-            else if(toCurrency == "EUR")
+            else if (toCurrency == "EUR")
             {
-                Currency = new double[] { 500, 200, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.20, 0.10, 0.05, 0.02, 0.01 };
-
+                Currency = new float[] { 500, 200, 100, 50, 20, 10, 5, 2, 1, 0.50f, 0.20f, 0.10f, 0.05f, 0.02f, 0.01f };
             }
             else if (toCurrency == "USD")
             {
-                Currency = new double[] { 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.10, 0.05, 0.01 };
-
+                Currency = new float[] { 100, 50, 20, 10, 5, 2, 1, 0.50f, 0.25f, 0.10f, 0.05f, 0.01f };
             }
-            double tempValue = 0;
-            double tempValue2 = 0;
+
+
+            float tempValue = 0;
+            float tempValue2 = 0;
 
             for (int i = 0; i < Currency.Length; i++)
             {
@@ -137,10 +138,19 @@ namespace CurrencyConverter
 
                 if (!((int)tempValue2 == 0))
                 {
-                    Console.WriteLine((int)tempValue2 + "st " + Currency[i] + toCurrency);
+                    if (Currency[i] >= 1f)
+                    {
+                        Console.WriteLine((int)tempValue2 + "st \t" + Currency[i] + " " + toCurrency);
+                    }
+                    else
+                    {
+                        string s_temp = Currency[i].ToString("0.00");
+                        string s2_temp = s_temp.TrimStart('0', '.');
+                        Console.WriteLine((int)tempValue2 + "st \t" + s2_temp + " Cent " + toCurrency);
+                    }
                 }
             }
-            Console.ReadKey();     
+            Console.ReadKey();
         }
 
         static void CleanConsole()
