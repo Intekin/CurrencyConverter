@@ -12,7 +12,15 @@ namespace CurrencyConverter
 
         static void Main(string[] args)
         {
+            Console.WriteLine(args[0] + args[1]+ args[2]);
             bool quit = false;
+
+            if (!(args.Length == 0))
+            {
+                ConvertMenu(args);
+                quit = true;
+            }
+            
             int selection = 0;
 
             while (!quit)
@@ -27,7 +35,7 @@ namespace CurrencyConverter
                         break;
 
                     case 1:
-                        ConvertMenu();
+                        ConvertMenu(null);
                         selection = 0;
                         CleanConsole();
                         break;
@@ -48,29 +56,36 @@ namespace CurrencyConverter
 
         }
 
-        private static void ConvertMenu()
+        private static void ConvertMenu(string[] argument)
         {
             string[] value = { "", "", "" }; // Amount, from, to
 
-            Console.WriteLine("-----Conversion Menu.-----\n" +
-                "Please type the amount you want to convert");
-            value[0] = Console.ReadLine();
+            if (argument == null)
+            {
+                Console.WriteLine("-----Conversion Menu.-----\n" +
+                    "Please type the amount you want to convert");
+                value[0] = Console.ReadLine();
 
-            Console.WriteLine("Please type the currency you have, SEK, EUR, USD");
-            value[1] = Console.ReadLine();
+                Console.WriteLine("Please type the currency you have, SEK, EUR, USD");
+                value[1] = Console.ReadLine();
 
-            Console.WriteLine("Please type the currency you want to convert to SEK, EUR, USD");
-            value[2] = Console.ReadLine();
+                Console.WriteLine("Please type the currency you want to convert to SEK, EUR, USD");
+                value[2] = Console.ReadLine();
+            }
+            else
+            {
+                value = argument;
+            }
 
             double amount = Convert.ToDouble(value[0]); //Convert value[0] to an int
 
 
-            if ((value[2] == "EUR") || (value[2] == "USD") || (value[2] == "SEK"))
+            if ((value[2] == "EUR") || (value[2] == "USD") || (value[2] == "SEK")) //Onlu convets from sek to usd
             {
-                amount = amount / currencyValue[1];
-                Console.WriteLine(value[0] + value[1] + " is " + amount + value[1]
+                amount = amount / currencyValue[2];
+                Console.WriteLine(value[0] + value[1] + " is " + amount + value[2]
                     + "\nThis is the bills and coins you will recive:\n");
-                CalculateValues(amount, value[1], value[2]);
+                CalculateValues((float)amount, value[1], value[2]);
             }
             else
             {

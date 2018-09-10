@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConverter", "CurrencyConverter\CurrencyConverter.csproj", "{B3B375DD-3A14-4BEA-A60A-B43AFA1347E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConverter_With_If_Tree", "CurrencyConverter_With_If_Tree\CurrencyConverter_With_If_Tree.csproj", "{DC7BC97D-CF22-43C0-AA25-A612B4D8EE90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValCon", "CurrencyConverter_With_If_Tree\ValCon.csproj", "{DC7BC97D-CF22-43C0-AA25-A612B4D8EE90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
